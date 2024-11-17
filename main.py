@@ -29,7 +29,7 @@ def clearArrays():
 
 
 def posFinder():
-    global firstValAdded, fingerX, palmDetect, palmDetectToler, fingerY, fingerYToler
+    global prevRewind, firstValAdded, fingerX, palmDetect, palmDetectToler, fingerY, fingerYToler
     loopCount=0
     while True:
         success, image = capt.read()
@@ -73,6 +73,7 @@ def posFinder():
                             keyboard.press(Key.media_play_pause)
                             print('Paused!')
                             clearArrays()
+                            prevRewind = False
                             sleep(gracePeriod)
                     if pos[0]==8:
                         print(str(pos[1])+', '+str(pos[2]))
@@ -85,6 +86,7 @@ def posFinder():
                                 keyboard.press(Key.media_next)
                                 print('Skipped!')
                                 clearArrays()
+                                prevRewind = False
                                 sleep(gracePeriod)
                                 break
                             if currentX-fingerX[-i]>150:
@@ -93,7 +95,7 @@ def posFinder():
                                 keyboard.press(Key.media_previous)
                                 print(fingerX)
                                 print('Rewinded!')
-                                if (prevRewind) :
+                                if (prevRewind):
                                     keyboard.press(Key.media_previous)
                                     prevRewind = False
                                 else:
@@ -103,6 +105,7 @@ def posFinder():
                                 break
                 if (indexY < handBottomY) and (indexY > indexMid):
                     clearArrays()
+                    prevRewind = False
                     print("Cleared!")
                     sleep(gracePeriod-1)
 
